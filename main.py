@@ -11,6 +11,7 @@ mp_face_mesh = mp.solutions.face_mesh
 # drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 
 cap = cv2.VideoCapture(0)
+print_once = True
 
 with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection_confidence=0.5,
                            min_tracking_confidence=0.5) as face_mesh:
@@ -44,6 +45,11 @@ with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection
         if results.multi_face_landmarks:
 
             for face_landmarks in results.multi_face_landmarks:
+                if print_once:
+                    for idx, landmark in enumerate(face_landmarks.landmark):
+                        print("vector of landmark " + str(idx + 1))
+                        print(str(landmark.x) + "\n" + str(landmark.y) + "\n" + str(landmark.z))
+                    # print_once = False
                 mp_drawing.draw_landmarks(
 
                     image=image,
